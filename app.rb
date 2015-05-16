@@ -8,17 +8,31 @@ require 'helpers/application_helper'
 require 'helpers/image_helper'
 require 'helpers/twitter_helper'
 require 'helpers/url_helper'
+require 'YAML'
+require 'flickraw'
 
 configure do
   enable :sessions
+  set :root, File.dirname(__FILE__)
   set :server, 'webrick'
 
   set :public_folder, Proc.new { File.join(root, "static") }
 
-  set :flickr_api_key, ENV['FLICKR_API_KEY']
-  set :flickr_secret, ENV['FLICKR_SECRET']
-  set :flickr_access_token, ENV['FLICKR_ACCESS_TOKEN']
-  set :flickr_access_secret, ENV['FLICKR_ACCESS_SECRET']
+  options = YAML.load_file("options.yml")
+  flickr_options = options['flickr']
+  flickr_api_key = flickr_options['flickr_api_key']
+  flickr_secret = flickr_options['flickr_secret']
+
+  set :flickr_api_key,        flickr_api_key
+  set :flickr_secret,         flickr_secret
+
+  FlickRaw.api_key = flickr_api_key
+  FlickRaw.shared_secret = flickr_secret
+
+  token = flickr.get_request_token
+
+  set :flickr_access_token,  token["oauth_token"]
+  set :flickr_access_secret,  token["oauth_token_secret"]
 
   set :fb_app_id, ENV['FB_APP_ID']
   set :fb_app_secret, ENV['FB_APP_SECRET']

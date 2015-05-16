@@ -25,6 +25,19 @@ module Sharing
       FlickRaw.url_b(info)
     end
 
+    def get_request_token
+      begin
+        client.get_request_token(:oauth_callback => 'http://www.newsalertapp.com/monitor')
+      rescue Exception => ex
+        ex.message
+        nil
+      end
+    end
+
+    def get_authorize_url(token, perms)
+      client.get_authorize_url(token, :perms => perms)
+    end
+
     private
 
     def client
