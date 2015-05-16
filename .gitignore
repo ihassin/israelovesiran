@@ -3,4 +3,5 @@
 *.swp
 ./idea/**
 coverage/**
-
+options.yml
+spec/cassettes/**
