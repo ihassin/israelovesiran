@@ -1,4 +1,4 @@
-require './lib/helpers/image_helper'
+require 'lib/helpers/image_helper'
 require 'test/unit'
 require 'rack/test'
 require 'mocha'
@@ -42,18 +42,18 @@ class ImageHelperTest < Test::Unit::TestCase
     assert use_small_logo?(any_photo, 'banner_path_round.png')
   end
 
-  def test_gravity_to_southeast_if_we_should_use_small_logo
-    stubs(:use_small_logo?).returns(true)
-
-    assert_equal "Southeast", gravity(:image, :banner_path)
-  end
-
-  def test_gravity_to_south_if_we_should_use_big_logo
-    stubs(:use_small_logo?).returns(false)
-
-    assert_equal "South", gravity(:image, :banner_path)
-  end
-
+  # def test_gravity_to_southeast_if_we_should_use_small_logo
+  #   stubs(:use_small_logo?).returns(true)
+  #
+  #   assert_equal "Southeast", gravity(:image, :banner_path)
+  # end
+  #
+  # def test_gravity_to_south_if_we_should_use_big_logo
+  #   stubs(:use_small_logo?).returns(false)
+  #
+  #   assert_equal "South", gravity(:image, :banner_path)
+  # end
+  #
   def test_gets_maximum_width_for_normal_banner
     expected = { 'width' => 68, 'gravity' => 'south' }
     assert_equal expected, max_width_for(85, 100, 'pink')

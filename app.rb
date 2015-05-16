@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-$LOAD_PATH << './lib'
+$LOAD_PATH << 'lib'
 require 'rubygems'
 require 'sinatra'
 require 'haml'
@@ -11,6 +11,7 @@ require 'helpers/url_helper'
 
 configure do
   enable :sessions
+  set :server, 'webrick'
 
   set :public_folder, Proc.new { File.join(root, "static") }
 
